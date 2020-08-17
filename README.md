@@ -1,5 +1,7 @@
 # Payara with NoSQL
 
+<a href="https://console.platform.sh/projects/create-project/?template=https://github.com/otaviojava/payara-nosql/blob/master/.platform.template.yaml&utm_campaign=deploy_on_platform?utm_medium=button&utm_source=affiliate_links&utm_content=https://github.com/otaviojava/payara-nosql/blob/master/.platform.template.yaml" target="_blank" title="Deploy with Platform.sh"><img src="https://platform.sh/images/deploy/deploy-button-lg-blue.svg"></a>
+
 ![Platform.sh and Payara](https://otaviojava.files.wordpress.com/2020/03/payara-psh-book.jpg?w=189)
 
 The NoSQL DB is a database that provides a mechanism for storage and retrieval of data, which is modeled by means other than the tabular relations used in relational databases. These databases have speed and high scalability. This kind of database is becoming more popular in several applications, which include financial ones. As a result of the increase, the number of users and vendors is increasing too. In the Jakarta EE world, there is the [Jakarta NoSQL](https://projects.eclipse.org/projects/ee4j.nosql).
