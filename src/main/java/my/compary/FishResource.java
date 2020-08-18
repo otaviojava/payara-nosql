@@ -1,6 +1,14 @@
 package my.compary;
 
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,7 +23,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("fishes")
+@Path("fish")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class FishResource {
@@ -24,7 +32,12 @@ public class FishResource {
     private FishRepository repository;
 
     @POST
-    public void create(Fish entity) {
+    @Operation(summary = "Insert an Episode", description = "Insert a fish")
+    @APIResponse(responseCode = "201", description = "When creates a fish")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
+    public void create(@RequestBody(description = "Create a new Episode.",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Fish.class))) Fish entity) {
         repository.save(entity);
     }
 
@@ -35,20 +48,36 @@ public class FishResource {
     }
 
     @DELETE
+    @Operation(summary = "Delete a fish by ID", description = "Delete a fish by ID")
+    @APIResponse(responseCode = "200", description = "When deletes the fish")
+    @APIResponse(responseCode = "404", description = "When the id does not exist")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
+    public void remove(@Parameter(description = "The Fish ID", required = true,
+            example = "1", schema = @Schema(type = SchemaType.INTEGER))
+                       @PathParam("id") String id) {
         repository.deleteById(id);
     }
 
     @GET
     @Path("{id}")
-    public Fish find(@PathParam("id") String id) {
+    @Operation(summary = "Find an fish by id", description = "Find an fish by id")
+    @APIResponse(responseCode = "200", description = "The fish")
+    @APIResponse(responseCode = "404", description = "When the id does not exist")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
+    @APIResponse(description = "The Fish", content = @Content(mediaType = MediaType.APPLICATION_JSON,
+            schema = @Schema(implementation = Fish.class)))
+    public Fish find(@Parameter(description = "The Fish ID", required = true,
+            example = "1", schema = @Schema(type = SchemaType.INTEGER)) @PathParam("id") String id) {
         return repository.findById(id)
                 .orElseThrow(() ->
                         new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
+    @Operation(summary = "Get all the fish", description = "Returns all available fish")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
+    @APIResponse(responseCode = "200", description = "The fish")
     public List<Fish> findAll() {
         return repository.findAll();
     }
