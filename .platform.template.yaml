@@ -2,9 +2,9 @@ version: 1
 
 info:
   id: otaviojava-payara-nosql
-  name: Helidon
+  name: Payara NoSQL
   description: |
-    <p>Helidon is a collection of Java libraries for writing microservices that run on a fast web core powered by Netty.</p>
+    <p>Payara NoSQL Sample with Java 11.</p>
   tags:
     - Java
     - MicroProfile
